@@ -10,8 +10,8 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@Entity
-@Table(name = "altinn_salary_taxinfo")
+// @Entity
+// @Table(name = "altinn_salary_taxinfo")
 public class AltinnSalaryTaxInfo {
 
     @Id

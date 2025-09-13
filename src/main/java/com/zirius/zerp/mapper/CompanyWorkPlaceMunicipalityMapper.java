@@ -1,11 +1,15 @@
 package com.zirius.zerp.mapper;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zirius.zerp.model.salary.WorkPlaceMunicipalityObject;
+import com.zirius.zerp.model.salary.WorkPlaceObject;
 import com.zirius.zerp.model.zerp.CompanyWorkPlaceMunicipality;
+import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 public class CompanyWorkPlaceMunicipalityMapper {
 
-    public static WorkPlaceMunicipalityObject toEntity(CompanyWorkPlaceMunicipality dto, Integer companyId) {
+    public static WorkPlaceMunicipalityObject toEntity(CompanyWorkPlaceMunicipality dto, WorkPlaceObject workPlaceObject, Integer companyId,
+                                                       CompanyConfigRepository repo, ObjectNode jsonNode) {
         WorkPlaceMunicipalityObject entity = new WorkPlaceMunicipalityObject();
 
 
@@ -13,7 +17,7 @@ public class CompanyWorkPlaceMunicipalityMapper {
 
         entity.setCompanyId(companyId);
 
-        entity.setWorkPlaceId(dto.getWORK_PLACE_ID());
+        entity.setWorkPlaceId(workPlaceObject.getWorkPlaceId());
         entity.setYear(dto.getYEAR());
 
 
@@ -27,6 +31,13 @@ public class CompanyWorkPlaceMunicipalityMapper {
         // Default values for optional fields
         entity.setInactive(false);
         entity.setToBeDeleted(false);
+
+        repo.save(entity);
+
+        if (entity.getWorkPlaceMunicipalityId() != null) {
+            jsonNode.put("ziriusId", entity.getWorkPlaceMunicipalityId());
+            jsonNode.put("isUpdated", "true");
+        }
 
         return entity;
     }

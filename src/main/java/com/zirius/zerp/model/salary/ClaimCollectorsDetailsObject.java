@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "claim_collectors_details")
+@Table(name = "claim_collectors_details", schema = "salary")
 @Data
 public class ClaimCollectorsDetailsObject {
 
@@ -35,6 +35,7 @@ public class ClaimCollectorsDetailsObject {
     public static final String PROPERTYNAME_toBeDeleted = "TO_BE_DELETED";
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CLAIM_COLLECTORS_ID")
     private Integer claimCollectorsId;
 
@@ -80,7 +81,7 @@ public class ClaimCollectorsDetailsObject {
     @Column(name = "MAX_AMOUNT")
     private BigDecimal maxAmount;
 
-    @Id
+
     @Column(name = "COMPANY_ID", nullable = false)
     private Integer companyId;
 

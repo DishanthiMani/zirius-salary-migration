@@ -1,23 +1,28 @@
 package com.zirius.zerp.mapper;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zirius.zerp.model.salary.SalaryReportingCodeDetails;
+import com.zirius.zerp.model.salary.StandardSalaryCodeDetails;
 import com.zirius.zerp.model.zerp.SalaryReportingCode;
 import com.zirius.zerp.model.zerp.SalaryReportingCodeAmessage;
 import com.zirius.zerp.model.zerp.SalaryReportingCodeBasis;
+import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 
 public class SalaryReportingCodeMapper {
 
     public static SalaryReportingCodeDetails toEntity(SalaryReportingCode dto, Integer companyId, SalaryReportingCodeBasis
-            codeBasis, SalaryReportingCodeAmessage codeAMessage) {
+            codeBasis, SalaryReportingCodeAmessage codeAMessage, CompanyConfigRepository repo, ObjectNode jsonNode, Map<String, StandardSalaryCodeDetails> standardCodeMap) {
         SalaryReportingCodeDetails entity = new SalaryReportingCodeDetails();
-
-        entity.setSalaryReportingCodeId(null);
+        StandardSalaryCodeDetails standardCodeDetals = standardCodeMap.get(dto.getSalaryReportingCode());
+        entity.setSalaryReportingCodeId(standardCodeDetals != null ? standardCodeDetals.getSalaryReportingCodeId() : null);
         entity.setCompanyId(companyId);
         entity.setSalaryReportingCode(dto.getSalaryReportingCode());
         entity.setSalaryReportingCodeName(dto.getSalaryReportingCodeName());
@@ -41,7 +46,7 @@ public class SalaryReportingCodeMapper {
         entity.setTaxesId(codeBasis.getTAXES_ID());
         entity.setPensionId(codeBasis.getPENSION_ID());
         entity.setSsbId(codeBasis.getSSB_ID());
-        entity.setIsPension(codeBasis.getIS_PENSION());
+//        entity.setIsPension(codeBasis.getIS_PENSION());
         entity.setSalaryCodeRateTypeId(codeBasis.getSALARY_CODE_RATE_TYPE_ID());
         entity.setSalaryCodeYearlyRateTypeId(codeBasis.getSALARY_CODE_YEARLY_RATE_TYPE_ID());
 
@@ -54,7 +59,27 @@ public class SalaryReportingCodeMapper {
         entity.setInactive(false);
         entity.setToBeDeleted(false);
 
+        if (entity.getSalaryReportingCodeId() == null) {
+            generateSalaryCodeId(entity, repo);
+        }
+
+
+        repo.save(entity);
+
+
+        if (entity.getSalaryReportingCodeId() != null) {
+            jsonNode.put("ziriusId", entity.getSalaryReportingCodeId());
+            jsonNode.put("isUpdated", "true");
+        }
+
         return entity;
+    }
+
+    public static void generateSalaryCodeId(SalaryReportingCodeDetails codeDetails, CompanyConfigRepository repo) {
+
+        Integer maximumId = repo.getMaximumSalaryReportingCodeId();
+
+        codeDetails.setSalaryReportingCodeId(maximumId != 0 ? maximumId + 1 : maximumId);
     }
 
     private static LocalDateTime convertToLocalDateTime(Date date) {

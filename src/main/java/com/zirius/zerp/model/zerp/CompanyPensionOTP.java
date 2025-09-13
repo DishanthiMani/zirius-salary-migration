@@ -6,8 +6,8 @@ import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "company_pension_otp")
+// @Entity
+// @Table(name = "company_pension_otp")
 public class CompanyPensionOTP {
 
     @Id

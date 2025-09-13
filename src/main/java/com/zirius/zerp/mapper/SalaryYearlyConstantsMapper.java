@@ -1,16 +1,22 @@
 package com.zirius.zerp.mapper;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.zirius.zerp.model.zerp.CompanySalaryDetails;
 import com.zirius.zerp.model.zerp.SalaryYearlyConstant;
 import com.zirius.zerp.model.salary.SalaryYearlyConstantsConfigObject;
+import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 import java.math.BigDecimal;
 
 public class SalaryYearlyConstantsMapper {
 
-    public static SalaryYearlyConstantsConfigObject toEntity(SalaryYearlyConstant dto, Integer companyId) {
+    public static SalaryYearlyConstantsConfigObject toEntity(SalaryYearlyConstant dto, CompanySalaryDetails salaryDetails, Integer companyId,
+                                                             CompanyConfigRepository repo, ObjectNode jsonNode) {
+
+
         SalaryYearlyConstantsConfigObject entity = new SalaryYearlyConstantsConfigObject();
 
-        entity.setYearlyConstantsId(dto.getYEARLY_CONSTANTS_ID());
+        entity.setYearlyConstantsId(null);
         entity.setMaxEcomRefundAmount(toBigDecimal(dto.getMAX_ECOM_REFUND_AMOUNT()));
         entity.setCarAllowanceWithTax(toBigDecimal(dto.getCAR_ALLOWANCE_WITH_TAX()));
         entity.setCarAllowanceWithoutTax(toBigDecimal(dto.getCAR_ALLOWANCE_WITHOUT_TAX()));
@@ -28,7 +34,7 @@ public class SalaryYearlyConstantsMapper {
         entity.setOneGYearlyConstant(toBigDecimal(dto.getONE_G_YEARLY_CONSTANT()));
         entity.setYear(Integer.parseInt(dto.getYEAR().toString()));
 
-        entity.setCompanyId(companyId != null ? companyId : dto.getCOMPANY_ID());
+        entity.setCompanyId(companyId);
 
         entity.setSalaryCodeConstant(toBigDecimal(dto.getSALARY_CODE_CONSTANT()));
         entity.setPaulArbAvgOfBonusAmountConstant(toBigDecimal(dto.getPAUL_ARB_AVG_OF_BONUS_AMOUNT_CONSTANT()));
@@ -47,8 +53,17 @@ public class SalaryYearlyConstantsMapper {
 
         entity.setInactive(false);
         entity.setToBeDeleted(false);
-        // TODO: set from salary details data
-        entity.setLimitToSixG(false);
+
+        entity.setLimitToSixG(salaryDetails.getLIMIT_TO_SIX_G());
+
+        repo.save(entity);
+
+        if (entity.getYearlyConstantsId() != null) {
+
+            jsonNode.put("ziriusId", entity.getYearlyConstantsId());
+            jsonNode.put("isUpdated", "true");
+
+        }
 
         return entity;
     }

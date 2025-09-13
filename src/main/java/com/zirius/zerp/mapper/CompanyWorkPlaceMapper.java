@@ -1,13 +1,24 @@
 package com.zirius.zerp.mapper;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.zirius.zerp.model.salary.WorkPlaceMunicipalityObject;
 import com.zirius.zerp.model.salary.WorkPlaceObject;
 import com.zirius.zerp.model.zerp.CompanyWorkPlace;
+import com.zirius.zerp.model.zerp.CompanyWorkPlaceMunicipality;
+import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CompanyWorkPlaceMapper {
 
-    public static WorkPlaceObject toEntity(CompanyWorkPlace dto, Integer companyId) {
+    public static WorkPlaceObject toEntity(CompanyWorkPlace dto, Integer companyId,
+                                           CompanyConfigRepository repo, ObjectNode jsonNode) {
         WorkPlaceObject entity = new WorkPlaceObject();
 
         entity.setWorkPlaceId(null);
@@ -34,6 +45,14 @@ public class CompanyWorkPlaceMapper {
         // Default or placeholders for optional fields in WorkPlaceObject
         entity.setInactive(false); // or set based on your logic
         entity.setToBeDeleted(false); // or set based on your logic
+
+        repo.save(entity);
+
+        if (entity.getWorkPlaceId() != null) {
+            jsonNode.put("ziriusId", entity.getWorkPlaceId());
+            jsonNode.put("isUpdated", "true");
+        }
+
 
         return entity;
     }

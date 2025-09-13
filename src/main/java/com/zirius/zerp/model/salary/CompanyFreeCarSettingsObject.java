@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Entity
-@Table(name = "company_free_car_settings")
+@Table(name = "company_free_car_settings", schema = "salary")
 @Data
 public class CompanyFreeCarSettingsObject {
 

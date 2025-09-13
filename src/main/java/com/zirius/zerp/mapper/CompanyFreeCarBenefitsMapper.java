@@ -1,18 +1,20 @@
 package com.zirius.zerp.mapper;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zirius.zerp.model.salary.CompanyFreeCarBenefitsObject;
+import com.zirius.zerp.model.salary.CompanyFreeCarDetailsObject;
 import com.zirius.zerp.model.zerp.CompanyFreeCarBenefits;
+import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 import java.math.BigDecimal;
 
 public class CompanyFreeCarBenefitsMapper {
 
-    public static CompanyFreeCarBenefitsObject toEntity(CompanyFreeCarBenefits dto, Integer companyId) {
+    public static CompanyFreeCarBenefitsObject toEntity(CompanyFreeCarBenefits dto, CompanyFreeCarDetailsObject freeCar, Integer companyId, CompanyConfigRepository repo, ObjectNode jsonNode) {
         CompanyFreeCarBenefitsObject entity = new CompanyFreeCarBenefitsObject();
 
-        if (dto.getCompanyFreeCarBenefitId() != null) {
-            entity.setCompanyFreeCarBenefitsId(dto.getCompanyFreeCarBenefitId().intValue());
-        }
+        entity.setCompanyFreeCarBenefitsId(freeCar.getCompanyFreeCarDetailsId());
+
 
         entity.setSalaryReportingCodeId(dto.getSalaryReportingCodeId());
 
@@ -30,9 +32,8 @@ public class CompanyFreeCarBenefitsMapper {
 
         entity.setCompanyId(companyId);
 
-        if (dto.getVersion() != 0) {
-            entity.setVersion(dto.getVersion());
-        }
+        entity.setVersion(dto.getVersion());
+
 
         if (dto.getCREATED_DATETIME() != null) {
             entity.setCreatedDatetime(dto.getCREATED_DATETIME());
@@ -44,6 +45,16 @@ public class CompanyFreeCarBenefitsMapper {
 
         entity.setInactive(false);
         entity.setToBeDeleted(false);
+
+        repo.save(entity);
+
+        if (entity.getCompanyFreeCarBenefitsId() != null) {
+            jsonNode.put("ziriusId", entity.getCompanyFreeCarBenefitsId());
+            jsonNode.put("isUpdated", "true");
+
+            freeCar.setCompanyFreeCarBenefitsId(entity.getCompanyFreeCarBenefitsId());
+            repo.update(freeCar);
+        }
 
         return entity;
     }

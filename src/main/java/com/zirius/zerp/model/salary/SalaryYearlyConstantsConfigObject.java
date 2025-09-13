@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "salary_yearly_constants_config")
+@Table(name = "salary_yearly_constants_config", schema = "salary")
 @Data
 public class SalaryYearlyConstantsConfigObject {
 

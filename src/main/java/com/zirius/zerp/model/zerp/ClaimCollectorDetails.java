@@ -7,8 +7,8 @@ import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "claim_collectors")
+// @Entity
+// @Table(name = "claim_collectors")
 public class ClaimCollectorDetails {
     @Id
     private Long CLAIM_COLLECTORS_ID;

@@ -10,8 +10,8 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-@Entity
-@Table(name = "pay_slip_log")
+// @Entity
+// @Table(name = "pay_slip_log")
 public class PaySlipLog {
 
     @Id

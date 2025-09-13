@@ -6,8 +6,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 
-@Entity
-@Table(name = "Company")
+// @Entity
+// @Table(name = "Company")
 @Data
 public class Company {
 

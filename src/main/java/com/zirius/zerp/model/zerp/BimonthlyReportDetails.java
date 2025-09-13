@@ -8,8 +8,8 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@Entity
-@Table(name = "bimonthly_report_details")
+// @Entity
+// @Table(name = "bimonthly_report_details")
 public class BimonthlyReportDetails {
 
     @Id

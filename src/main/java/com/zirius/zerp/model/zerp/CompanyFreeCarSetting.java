@@ -7,11 +7,11 @@ import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "company_free_car_settings")
+// @Entity
+// @Table(name = "company_free_car_settings")
 public class CompanyFreeCarSetting {
     @Id
-    private Long COMPANY_FREE_CAR_SETTINGS_ID;
+    private Integer COMPANY_FREE_CAR_SETTINGS_ID;
     private Boolean  IS_CAR_POOL;
     private Boolean  IS_DRIVING_OVER_40000;
     private Boolean  IS_ELECTRIC_CAR;
@@ -20,12 +20,15 @@ public class CompanyFreeCarSetting {
     private int VERSION;
     private Date CREATED_DATETIME;
     private Date MODIFIED_DATETIME;
+    private Integer ziriusId;
+    private boolean isUpdated;
 
-    public Long getCOMPANY_FREE_CAR_SETTINGS_ID() {
+
+    public Integer getCOMPANY_FREE_CAR_SETTINGS_ID() {
         return COMPANY_FREE_CAR_SETTINGS_ID;
     }
 
-    public void setCOMPANY_FREE_CAR_SETTINGS_ID(Long COMPANY_FREE_CAR_SETTINGS_ID) {
+    public void setCOMPANY_FREE_CAR_SETTINGS_ID(Integer COMPANY_FREE_CAR_SETTINGS_ID) {
         this.COMPANY_FREE_CAR_SETTINGS_ID = COMPANY_FREE_CAR_SETTINGS_ID;
     }
 
@@ -91,5 +94,21 @@ public class CompanyFreeCarSetting {
 
     public void setMODIFIED_DATETIME(Date MODIFIED_DATETIME) {
         this.MODIFIED_DATETIME = MODIFIED_DATETIME;
+    }
+
+    public Integer getZiriusId() {
+        return ziriusId;
+    }
+
+    public void setZiriusId(Integer ziriusId) {
+        this.ziriusId = ziriusId;
+    }
+
+    public boolean getIsUpdated() {
+        return isUpdated;
+    }
+
+    public void setIsUpdated(boolean updated) {
+        isUpdated = updated;
     }
 }

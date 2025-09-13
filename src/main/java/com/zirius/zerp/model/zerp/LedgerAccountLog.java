@@ -8,8 +8,8 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-@Entity
-@Table(name = "ledger_account_log")
+// @Entity
+// @Table(name = "ledger_account_log")
 public class LedgerAccountLog {
 
     @Id

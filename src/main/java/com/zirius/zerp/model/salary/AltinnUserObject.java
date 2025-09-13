@@ -6,49 +6,49 @@ import lombok.Data;
 import java.util.Date;
 
 @Entity
-@Table(name = "altinn_user")
+@Table(name = "altinn_user", schema = "salary")
 @Data
 public class AltinnUserObject {
 
-    public static final String PROPERTYNAME_altinnUserId = "ALTINN_USER_ID";
-    public static final String PROPERTYNAME_companyId = "COMPANY_ID";
-    public static final String PROPERTYNAME_userId = "USER_ID";
-    public static final String PROPERTYNAME_ssn = "SSN";
-    public static final String PROPERTYNAME_systemName = "SYSTEM_NAME";
-    public static final String PROPERTYNAME_systemPassword = "SYSTEM_PASSWORD";
-    public static final String PROPERTYNAME_userName = "USER_NAME";
-    public static final String PROPERTYNAME_userPassword = "USER_PASSWORD";
-    public static final String PROPERTYNAME_phoneNumber = "PHONE_NUMBER";
-    public static final String PROPERTYNAME_description = "DESCRIPTION";
-    public static final String PROPERTYNAME_isDefault = "IS_DEFAULT";
-    public static final String PROPERTYNAME_createdDatetime = "CREATED_DATETIME";
-    public static final String PROPERTYNAME_modifiedDatetime = "MODIFIED_DATETIME";
-    public static final String PROPERTYNAME_version = "VERSION";
-    public static final String PROPERTYNAME_inactive = "INACTIVE";
-    public static final String PROPERTYNAME_toBeDeleted = "TO_BE_DELETED";
-    public static final String PROPERTYNAME_employeeId = "EMPLOYEE_ID";
+    public static final String PROPERTYNAME_altinn_user_id = "altinn_user_id";
+    public static final String PROPERTYNAME_company_id = "company_id";
+    public static final String PROPERTYNAME_user_id = "user_id";
+    public static final String PROPERTYNAME_ssn = "ssn";
+    public static final String PROPERTYNAME_system_name = "system_name";
+    public static final String PROPERTYNAME_system_password = "system_password";
+    public static final String PROPERTYNAME_user_name = "user_name";
+    public static final String PROPERTYNAME_user_password = "user_password";
+    public static final String PROPERTYNAME_phone_number = "phone_number";
+    public static final String PROPERTYNAME_description = "description";
+    public static final String PROPERTYNAME_is_default = "is_default";
+    public static final String PROPERTYNAME_created_datetime = "created_datetime";
+    public static final String PROPERTYNAME_modified_datetime = "modified_datetime";
+    public static final String PROPERTYNAME_version = "version";
+    public static final String PROPERTYNAME_inactive = "inactive";
+    public static final String PROPERTYNAME_to_be_deleted = "to_be_deleted";
+    public static final String PROPERTYNAME_employee_id = "employee_id";
 
     @Id
-    @Column(name = "ALTINN_USER_ID")
+    @Column(name = "altinn_user_id")
     private Integer altinnUserId;
 
     @Id
-    @Column(name = "COMPANY_ID", nullable = false)
+    @Column(name = "company_id", nullable = false)
     private Integer companyId;
 
-    @Column(name = "USER_ID", nullable = false)
+    @Column(name = "user_id", nullable = false)
     private Integer userId;
 
-    @Column(name = "SSN")
+    @Column(name = "ssn")
     private String ssn;
 
-    @Column(name = "SYSTEM_NAME", nullable = false)
+    @Column(name = "system_name", nullable = false)
     private String systemName;
 
-    @Column(name = "SYSTEM_PASSWORD", nullable = false)
+    @Column(name = "system_password", nullable = false)
     private String systemPassword;
 
-    @Column(name = "USER_NAME", nullable = false)
+    @Column(name = "user_name", nullable = false)
     private String userName;
 
     @Column(name = "USER_PASSWORD", nullable = false)

@@ -7,12 +7,12 @@ import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "claim_collectors_values")
+// @Entity
+// @Table(name = "claim_collectors_values")
 public class ClaimCollectorValues {
 
     @Id
-    private Long CLAIM_COLLECTORS_VALUES_ID;
+    private Integer CLAIM_COLLECTORS_VALUES_ID;
     private String KID_NO;
     private Double TOTAL_AMOUNT;
     private Double PERCENTAGE;
@@ -23,11 +23,11 @@ public class ClaimCollectorValues {
     private Date CREATED_DATETIME;
     private Date MODIFIED_DATETIME;
 
-    public Long getCLAIM_COLLECTORS_VALUES_ID() {
+    public Integer getCLAIM_COLLECTORS_VALUES_ID() {
         return CLAIM_COLLECTORS_VALUES_ID;
     }
 
-    public void setCLAIM_COLLECTORS_VALUES_ID(Long CLAIM_COLLECTORS_VALUES_ID) {
+    public void setCLAIM_COLLECTORS_VALUES_ID(Integer CLAIM_COLLECTORS_VALUES_ID) {
         this.CLAIM_COLLECTORS_VALUES_ID = CLAIM_COLLECTORS_VALUES_ID;
     }
 

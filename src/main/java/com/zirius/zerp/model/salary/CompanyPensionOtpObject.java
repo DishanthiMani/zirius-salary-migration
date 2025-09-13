@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Entity
-@Table(name = "company_pension_otp")
+@Table(name = "company_pension_otp", schema = "salary")
 @Data
 public class CompanyPensionOtpObject {
 

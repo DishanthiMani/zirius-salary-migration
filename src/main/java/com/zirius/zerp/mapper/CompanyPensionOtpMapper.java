@@ -1,17 +1,17 @@
 package com.zirius.zerp.mapper;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zirius.zerp.model.salary.CompanyPensionOtpObject;
 import com.zirius.zerp.model.zerp.CompanyPensionOTP;
+import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 public class CompanyPensionOtpMapper {
 
-    public static CompanyPensionOtpObject toEntity(CompanyPensionOTP dto, Integer companyId) {
+    public static CompanyPensionOtpObject toEntity(CompanyPensionOTP dto, Integer companyId, CompanyConfigRepository repo, ObjectNode jsonNode) {
         CompanyPensionOtpObject entity = new CompanyPensionOtpObject();
 
-        if (dto.getOTP_ID() != null) {
-            entity.setOtpId(dto.getOTP_ID().intValue());
-        }
 
+        entity.setOtpId(null);
         entity.setCompanyId(companyId);
         entity.setOrgNo(dto.getORG_NO());
         entity.setName(dto.getNAME());
@@ -23,6 +23,13 @@ public class CompanyPensionOtpMapper {
 
         entity.setInactive(false);
         entity.setToBeDeleted(false);
+
+        repo.save(entity);
+        if (entity.getOtpId() != null) {
+
+            jsonNode.put("ziriusId", entity.getOtpId());
+            jsonNode.put("isUpdated", "true");
+        }
 
         return entity;
     }

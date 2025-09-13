@@ -9,8 +9,8 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@Entity
-@Table(name = "employee_worker_id_details")
+// @Entity
+// @Table(name = "employee_worker_id_details")
 public class EmployeeWorkerIdDetails {
 
     @Id

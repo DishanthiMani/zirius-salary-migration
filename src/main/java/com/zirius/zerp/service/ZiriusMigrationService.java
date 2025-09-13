@@ -41,42 +41,30 @@ public class ZiriusMigrationService {
     private CompanyConfigService configService;
 
 
-    public boolean updateCompanyData(String organizationNumber, String path) throws Exception{
+    public boolean updateCompanyData(Integer companyId, String path) throws Exception{
         Map<String, Object> companyDataMap = null;
 
         try {
-            CompanyDetailsDTO companyDetailsDTO = new CompanyDetailsDTO();
-            companyDataMap = getJSONFileDataForCompany(organizationNumber, path);
 
-            FirmaObject companyObject = configRepo.getFirmaObjectData((String) companyDataMap.get("organizationNumber"));
-            List<SalaryGroupObject> salaryGroupObject = configService.updateSalaryGroupObject(companyObject.getCOMPANY_ID(), companyDataMap);
-            List<SalaryReportingCodeDetails> salaryReportingCodeDetails = configService.updateSalaryReportingCodeDetails(companyObject.getCOMPANY_ID(), companyDataMap);
-            List<WorkPlaceObject> workPlaceObjects = configService.updateWorkPlaceObject(companyObject.getCOMPANY_ID(), companyDataMap);
-            List<WorkPlaceMunicipalityObject> workPlaceMunicipality = configService.updateWorkPlaceMunicipalityObject(companyObject.getCOMPANY_ID(), companyDataMap, workPlaceObjects);
-            CompanySalaryDetailsObject companySalaryDetails = configService.updateCompanySalaryDetails(companyObject.getCOMPANY_ID(), companyDataMap);
-            List<CompanyFreeCarInsuranceObject> companyFreeCarInsurance = configService.updateFreeCarInsuranceObject(companyObject.getCOMPANY_ID(), companyDataMap);
-            List<CompanyFreeCarSettingsObject> companyFreeCarSettingsObjects = configService.updateCompanyFreeCarSettingsObject(companyObject.getCOMPANY_ID(), companyDataMap);
-            List<CompanyFreeCarBenefitsObject> companyFreeCarBenefitsObjects = configService.updateCompanyFreeCarBenefitsObject(companyObject.getCOMPANY_ID(), companyDataMap);
-            List<CompanyFreeCarDetailsObject> companyFreeCarDetailsObjects = configService.updateFreeCarDetailsObject(companyObject.getCOMPANY_ID(), companyDataMap);
-            List<SalaryYearlyConstantsConfigObject> salaryYearlyConfigObject = configService.updateYearlyConstantConfig(companyObject.getCOMPANY_ID(), companyDataMap);
-            List<ClaimCollectorsDetailsObject> claimCollectorDetails = configService.updateClaimCollectorDetails(companyObject.getCOMPANY_ID(), companyDataMap);
-            List<CompanyPensionOtpObject> companyPensionOtpObjects = configService.updateCompanyPensionOtpObject(companyObject.getCOMPANY_ID(), companyDataMap);
+            companyDataMap = getJSONFileDataForCompany(companyId, path);
+            FirmaObject companyObject = configRepo.getFirmaObjectData(companyId);
+            updateCompanyConfiguration(companyObject, companyDataMap);
+            updateEmployeeConfiguration(companyObject, companyDataMap);
 
-            companyDetailsDTO.setFirmaObject(companyObject);
-            companyDetailsDTO.setSalaryGroupObjects(salaryGroupObject);
-            companyDetailsDTO.setSalaryReportingCodeDetails(salaryReportingCodeDetails);
-            companyDetailsDTO.setWorkPlaceObjects(workPlaceObjects);
-            companyDetailsDTO.setWorkPlaceMunicipalityObjects(workPlaceMunicipality);
-            companyDetailsDTO.setCompanySalaryDetailsObject(companySalaryDetails);
-            companyDetailsDTO.setCompanyFreeCarDetails(companyFreeCarDetailsObjects);
-            companyDetailsDTO.setCompanyFreeCarInsuranceObject(companyFreeCarInsurance);
-            companyDetailsDTO.setCompanyFreeCarSettingsObject(companyFreeCarSettingsObjects);
-            companyDetailsDTO.setCompanyFreeCarBenefitsObject(companyFreeCarBenefitsObjects);
-            companyDetailsDTO.setYearlyConstantsConfigObjects(salaryYearlyConfigObject);
-            companyDetailsDTO.setClaimCollectorsDetailsObjects(claimCollectorDetails);
-            companyDetailsDTO.setCompanyPensionOtpObjects(companyPensionOtpObjects);
+            if (companyDataMap != null) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(companyDataMap);
 
-            System.out.println("****CompanyConfigObject****" + companyDetailsDTO);
+//                String fallbackOrgNo = (String) companyDataMap.get("organizationNumber");
+                String fileName = "E:\\Migration_docs\\" + companyId + ".json";
+
+                Files.write(
+                        Paths.get(fileName),
+                        json.getBytes(),
+                        StandardOpenOption.CREATE,
+                        StandardOpenOption.TRUNCATE_EXISTING
+                );
+            }
 
             return true;
         } catch (Exception e) {
@@ -100,9 +88,62 @@ public class ZiriusMigrationService {
     }
 
 
+    public void updateCompanyConfiguration(FirmaObject companyObject, Map<String, Object> companyDataMap) {
+
+        try {
+
+            CompanyDetailsDTO companyDetailsDTO = new CompanyDetailsDTO();
+            List<SalaryGroupObject> salaryGroupObject = configService.updateSalaryGroupObject(companyObject.getCompany_id(), companyDataMap);
+            List<SalaryReportingCodeDetails> salaryReportingCodeDetails = configService.updateSalaryReportingCodeDetails(companyObject.getCompany_id(), companyDataMap);
+            List<WorkPlaceObject> workPlaceObjects = configService.updateWorkPlaceObject(companyObject.getCompany_id(), companyDataMap, companyDetailsDTO);
+            List<WorkPlaceMunicipalityObject> workPlaceMunicipality = configService.updateWorkPLaceMunicipality(companyObject.getCompany_id(), companyDataMap);
+            CompanySalaryDetailsObject companySalaryDetails = configService.updateCompanySalaryDetails(companyObject.getCompany_id(), companyDataMap);
+            List<CompanyFreeCarDetailsObject> companyFreeCarDetailsObjects = configService.updateFreeCarDetailsObject(companyObject.getCompany_id(), companyDataMap);
+            List<CompanyFreeCarSettingsObject> companyFreeCarSettingsObjects = configService.updateCompanyFreeCarSettingsObject(companyObject.getCompany_id(), companyDataMap);
+            List<CompanyFreeCarBenefitsObject> companyFreeCarBenefitsObjects = configService.updateCompanyFreeCarBenefitsObject(companyObject.getCompany_id(), companyDataMap);
+            List<CompanyFreeCarInsuranceObject> companyFreeCarInsurance = configService.updateFreeCarInsuranceObject(companyObject.getCompany_id(), companyDataMap);
+            List<SalaryYearlyConstantsConfigObject> salaryYearlyConfigObject = configService.updateYearlyConstantConfig(companyObject.getCompany_id(), companyDataMap);
+            List<ClaimCollectorsDetailsObject> claimCollectorDetails = configService.updateClaimCollectorDetails(companyObject.getCompany_id(), companyDataMap);
+            List<CompanyPensionOtpObject> companyPensionOtpObjects = configService.updateCompanyPensionOtpObject(companyObject.getCompany_id(), companyDataMap);
+
+            companyDetailsDTO.setFirmaObject(companyObject);
+
+            companyDetailsDTO.setSalaryGroupObjects(salaryGroupObject);
+            companyDetailsDTO.setSalaryReportingCodeDetails(salaryReportingCodeDetails);
+            companyDetailsDTO.setWorkPlaceObjects(workPlaceObjects);
+            companyDetailsDTO.setWorkPlaceMunicipalityObjects(workPlaceMunicipality);
+            companyDetailsDTO.setCompanySalaryDetailsObject(companySalaryDetails);
+            companyDetailsDTO.setCompanyFreeCarDetails(companyFreeCarDetailsObjects);
+            companyDetailsDTO.setCompanyFreeCarInsuranceObject(companyFreeCarInsurance);
+            companyDetailsDTO.setCompanyFreeCarSettingsObject(companyFreeCarSettingsObjects);
+            companyDetailsDTO.setCompanyFreeCarBenefitsObject(companyFreeCarBenefitsObjects);
+            companyDetailsDTO.setYearlyConstantsConfigObjects(salaryYearlyConfigObject);
+            companyDetailsDTO.setClaimCollectorsDetailsObjects(claimCollectorDetails);
+            companyDetailsDTO.setCompanyPensionOtpObjects(companyPensionOtpObjects);
+
+            System.out.println("****CompanyConfigObject****" + companyDetailsDTO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to update salary config");
+        }
+
+    }
+
+    public void updateEmployeeConfiguration(FirmaObject companyObject, Map<String, Object> companyDataMap) {
+
+        try {
 
 
-    public Map<String, Object> getJSONFileDataForCompany(String organizationNumber, String path) {
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to update EmployeeConfiguration");
+        }
+    }
+
+
+    public Map<String, Object> getJSONFileDataForCompany(Integer companyId, String path) {
 
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> jsonMap = new HashMap<>();
@@ -110,7 +151,7 @@ public class ZiriusMigrationService {
         try {
             // Check for null or empty path
             if (path == null || path.trim().isEmpty()) {
-                path = "E:/Migration_docs/" + organizationNumber + ".json";
+                path = "E:/Migration_docs/" + companyId + ".json";
             }
 
             File file = new File(path);

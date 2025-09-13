@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Entity
-@Table(name = "work_place_municipality")
+@Table(name = "work_place_municipality", schema = "salary")
 @Data
 public class WorkPlaceMunicipalityObject {
 
@@ -24,10 +24,10 @@ public class WorkPlaceMunicipalityObject {
     public static final String key = "work_place_municipality_id";
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "WORK_PLACE_MUNICIPALITY_ID")
     private Integer workPlaceMunicipalityId;
 
-    @Id
     @Column(name = "COMPANY_ID")
     private Integer companyId;
 

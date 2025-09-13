@@ -6,8 +6,8 @@ import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "work_place")
+// @Entity
+// @Table(name = "work_place")
 public class CompanyWorkPlace {
 
     @Id
@@ -32,6 +32,10 @@ public class CompanyWorkPlace {
     private Integer COMPANY_ID;
 
     private Integer VERSION;
+
+    private Integer ziriusId;
+
+    private boolean isUpdated;
 
     public Integer getWORK_PLACE_ID() {
         return WORK_PLACE_ID;
@@ -120,4 +124,21 @@ public class CompanyWorkPlace {
     public void setVERSION(Integer VERSION) {
         this.VERSION = VERSION;
     }
+
+    public Integer getZiriusId() {
+        return ziriusId;
+    }
+
+    public void setZiriusId(Integer ziriusId) {
+        this.ziriusId = ziriusId;
+    }
+
+    public boolean getIsUpdated() {
+        return isUpdated;
+    }
+
+    public void setIsUpdated(boolean updated) {
+        isUpdated = updated;
+    }
+
 }

@@ -8,8 +8,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
-@Entity
-@Table(name = "ledger_account_line_item_log")
+// @Entity
+// @Table(name = "ledger_account_line_item_log")
 public class LedgerAccountLineItemLog {
 
     @Id

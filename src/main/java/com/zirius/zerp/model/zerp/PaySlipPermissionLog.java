@@ -10,8 +10,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-@Entity
-@Table(name = "pay_slip_permission_log")
+// @Entity
+// @Table(name = "pay_slip_permission_log")
 public class PaySlipPermissionLog {
 
     @Id

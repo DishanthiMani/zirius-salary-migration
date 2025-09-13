@@ -9,8 +9,8 @@ import java.util.Date;
 
 @Data
 
-@Entity
-@Table(name = "app_user")
+// @Entity
+// @Table(name = "app_user")
 public class AppUser {
 
     @Id

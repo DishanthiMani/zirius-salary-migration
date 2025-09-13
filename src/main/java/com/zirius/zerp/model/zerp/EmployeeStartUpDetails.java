@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-@Entity
-@Table(name = "employee_startup_details")
+// @Entity
+// @Table(name = "employee_startup_details")
 public class EmployeeStartUpDetails {
 
     @Id

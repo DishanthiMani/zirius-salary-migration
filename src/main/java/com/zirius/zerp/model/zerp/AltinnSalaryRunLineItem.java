@@ -10,8 +10,8 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-@Entity
-@Table(name = "altinn_salary_run_line_item")
+// @Entity
+// @Table(name = "altinn_salary_run_line_item")
 public class AltinnSalaryRunLineItem {
 
     @Id

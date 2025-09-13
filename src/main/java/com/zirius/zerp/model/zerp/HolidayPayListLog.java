@@ -10,8 +10,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-@Entity
-@Table(name = "holiday_pay_list_log")
+// @Entity
+// @Table(name = "holiday_pay_list_log")
 public class HolidayPayListLog {
 
     @Id

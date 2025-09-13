@@ -7,12 +7,12 @@ import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "company_free_car_benefits")
+// @Entity
+// @Table(name = "company_free_car_benefits")
 public class CompanyFreeCarBenefits {
 
     @Id
-    private Long COMPANY_FREE_CAR_BENEFITS_ID;
+    private Integer COMPANY_FREE_CAR_BENEFITS_ID;
     private Integer SALARY_REPORTING_CODE_ID;
     private Double ANNUAL_BENEFIT;
     private Double AMOUNT_PER_SETTLEMENT;
@@ -21,12 +21,14 @@ public class CompanyFreeCarBenefits {
     private int VERSION;
     private Date CREATED_DATETIME;
     private Date MODIFIED_DATETIME;
+    private Integer ziriusId;
+    private boolean isUpdated;
 
-    public Long getCompanyFreeCarBenefitId() {
+    public Integer getCompanyFreeCarBenefitId() {
         return COMPANY_FREE_CAR_BENEFITS_ID;
     }
 
-    public void setCompanyFreeCarBenefitId(Long companyFreeCarBenefitId) {
+    public void setCompanyFreeCarBenefitId(Integer companyFreeCarBenefitId) {
         this.COMPANY_FREE_CAR_BENEFITS_ID = companyFreeCarBenefitId;
     }
 
@@ -92,6 +94,22 @@ public class CompanyFreeCarBenefits {
 
     public void setModifiedDateTime(Date modifiedDateTime) {
         this.MODIFIED_DATETIME = modifiedDateTime;
+    }
+
+    public Integer getZiriusId() {
+        return ziriusId;
+    }
+
+    public void setZiriusId(Integer ziriusId) {
+        this.ziriusId = ziriusId;
+    }
+
+    public boolean getIsUpdated() {
+        return isUpdated;
+    }
+
+    public void setIsUpdated(boolean updated) {
+        isUpdated = updated;
     }
 
 }

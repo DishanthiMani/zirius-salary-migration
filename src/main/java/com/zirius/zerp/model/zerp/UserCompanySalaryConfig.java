@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-@Entity
-@Table(name = "user_company_salary_config")
+// @Entity
+// @Table(name = "user_company_salary_config")
 public class UserCompanySalaryConfig {
 
     @Id

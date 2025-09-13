@@ -7,8 +7,8 @@ import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "company_free_car_details")
+// @Entity
+// @Table(name = "company_free_car_details")
 public class CompanyFreeCarDetails {
 
     @Id
@@ -26,6 +26,8 @@ public class CompanyFreeCarDetails {
     private int VERSION;
     private Date MODIFIED_DATETIME;
     private Date CREATED_DATETIME;
+    private Integer ziriusId;
+    private boolean isUpdated;
 
     public Long getCOMPANY_FREE_CAR_DETAILS_ID() {
         return COMPANY_FREE_CAR_DETAILS_ID;
@@ -137,6 +139,22 @@ public class CompanyFreeCarDetails {
 
     public void setCREATED_DATETIME(Date CREATED_DATETIME) {
         this.CREATED_DATETIME = CREATED_DATETIME;
+    }
+
+    public Integer getZiriusId() {
+        return ziriusId;
+    }
+
+    public void setZiriusId(Integer ziriusId) {
+        this.ziriusId = ziriusId;
+    }
+
+    public boolean getIsUpdated() {
+        return isUpdated;
+    }
+
+    public void setIsUpdated(boolean updated) {
+        isUpdated = updated;
     }
 }
 

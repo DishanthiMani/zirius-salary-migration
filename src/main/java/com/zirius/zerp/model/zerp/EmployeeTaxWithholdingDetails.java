@@ -9,8 +9,8 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-@Entity
-@Table(name = "salary_employee_tax_withholding_details")
+// @Entity
+// @Table(name = "salary_employee_tax_withholding_details")
 public class EmployeeTaxWithholdingDetails {
 
     @Id

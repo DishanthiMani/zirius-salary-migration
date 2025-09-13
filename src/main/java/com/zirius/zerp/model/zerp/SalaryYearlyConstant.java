@@ -7,8 +7,8 @@ import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "salary_yearly_constants_config")
+// @Entity
+// @Table(name = "salary_yearly_constants_config")
 public class SalaryYearlyConstant {
 
     @Id

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "salary_reporting_code_details")
+@Table(name = "salary_reporting_code_details", schema = "salary")
 public class SalaryReportingCodeDetails {
 
     @Id
@@ -70,8 +70,8 @@ public class SalaryReportingCodeDetails {
     @Column(name = "SSB_ID")
     private Integer ssbId;
 
-    @Column(name = "IS_PENSION")
-    private Boolean isPension;
+//    @Column(name = "IS_PENSION")
+//    private Boolean isPension;
 
     @Column(name = "SALARY_CODE_RATE_TYPE_ID")
     private Integer salaryCodeRateTypeId;

@@ -1,11 +1,13 @@
 package com.zirius.zerp.mapper;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zirius.zerp.model.salary.CompanySalaryDetailsObject;
 import com.zirius.zerp.model.zerp.CompanySalaryDetails;
+import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 public class CompanySalaryDetailsMapper {
 
-    public static CompanySalaryDetailsObject toEntity(CompanySalaryDetails dto, Integer companyId) {
+    public static CompanySalaryDetailsObject toEntity(CompanySalaryDetails dto, Integer companyId, CompanyConfigRepository repo, ObjectNode jsonNode) {
         CompanySalaryDetailsObject entity = new CompanySalaryDetailsObject();
 
         if (dto.getCOMPANY_ID() != null) {
@@ -35,6 +37,12 @@ public class CompanySalaryDetailsMapper {
 
         entity.setActiveFinancialDifficultyStartMonth(null);
         entity.setActiveFinancialDifficultyEndMonth(null);
+
+        repo.save(entity);
+        if (repo.getCompanySalaryDetails(companyId).getCompanyId() != null) {
+            jsonNode.put("ziriusId", entity.getCompanyId());
+            jsonNode.put("isUpdated", "true");
+        }
 
         return entity;
     }

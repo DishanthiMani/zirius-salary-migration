@@ -16,14 +16,7 @@ public class SalaryGroupMapper {
     private static Util util;
 
     public static SalaryGroupObject toEntity(SalaryGroup dto, Integer companyId, CompanyConfigRepository repo, ObjectNode jsonNode) {
-        // Check if already updated
-        JsonNode ziriusIdNode = jsonNode.get("ziriusId");
-        JsonNode isUpdatedNode = jsonNode.get("isUpdated");
 
-        if (ziriusIdNode != null && !ziriusIdNode.isNull() &&
-                isUpdatedNode != null && "true".equalsIgnoreCase(isUpdatedNode.asText())) {
-            return null;
-        }
 
         SalaryGroupObject entity = new SalaryGroupObject();
 

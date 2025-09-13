@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@Entity
-@Table(name = "company_tax_log")
+// @Entity
+// @Table(name = "company_tax_log")
 public class CompanyTaxLog {
 
     @Id

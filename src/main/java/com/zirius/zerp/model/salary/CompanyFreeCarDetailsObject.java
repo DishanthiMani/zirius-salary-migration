@@ -7,11 +7,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "company_free_car_details")
+@Table(name = "company_free_car_details", schema = "salary")
 @Data
 public class CompanyFreeCarDetailsObject {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "COMPANY_FREE_CAR_DETAILS_ID")
     private Integer companyFreeCarDetailsId;
 

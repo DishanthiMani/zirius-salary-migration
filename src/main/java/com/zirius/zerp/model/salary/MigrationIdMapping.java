@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "migration_id_mapping")
+@Table(name = "migration_id_mapping", schema = "salary")
 @Data
 public class MigrationIdMapping {
 

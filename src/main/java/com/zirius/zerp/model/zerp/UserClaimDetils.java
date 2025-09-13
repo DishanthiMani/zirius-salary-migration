@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-@Entity
-@Table(name = "user_company_claim_collector_config")
+// @Entity
+// @Table(name = "user_company_claim_collector_config")
 public class UserClaimDetils {
 
     @Id

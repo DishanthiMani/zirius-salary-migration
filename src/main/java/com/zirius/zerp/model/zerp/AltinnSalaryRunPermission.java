@@ -10,8 +10,8 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@Entity
-@Table(name = "altinn_salary_run_permission")
+// @Entity
+// @Table(name = "altinn_salary_run_permission")
 public class AltinnSalaryRunPermission {
 
     @Id

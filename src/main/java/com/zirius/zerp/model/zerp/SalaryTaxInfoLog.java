@@ -10,8 +10,8 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-@Entity
-@Table(name = "salary_taxinfo_log")
+// @Entity
+// @Table(name = "salary_taxinfo_log")
 public class SalaryTaxInfoLog {
 
     @Id

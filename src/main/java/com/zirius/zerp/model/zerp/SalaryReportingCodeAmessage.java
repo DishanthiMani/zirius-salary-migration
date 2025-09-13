@@ -5,8 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "salary_reporting_code_a_message")
+// @Entity
+// @Table(name = "salary_reporting_code_a_message")
 public class SalaryReportingCodeAmessage {
 
     @Id

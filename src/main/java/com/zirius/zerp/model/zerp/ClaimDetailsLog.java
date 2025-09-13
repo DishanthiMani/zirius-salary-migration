@@ -8,8 +8,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
-@Entity
-@Table(name = "claim_details_log")
+// @Entity
+// @Table(name = "claim_details_log")
 public class ClaimDetailsLog {
 
     @Id

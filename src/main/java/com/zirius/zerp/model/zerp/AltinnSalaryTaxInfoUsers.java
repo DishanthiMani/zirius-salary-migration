@@ -7,8 +7,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
-@Entity
-@Table(name = "altinn_salary_taxinfo_users")
+// @Entity
+// @Table(name = "altinn_salary_taxinfo_users")
 public class AltinnSalaryTaxInfoUsers {
 
     @Id

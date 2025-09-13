@@ -7,12 +7,12 @@ import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "company_free_car_insurance")
+// @Entity
+// @Table(name = "company_free_car_insurance")
 public class CompanyFreeCarInsurance {
 
     @Id
-    private Long COMPANY_FREE_CAR_INSURANCE_ID;
+    private Integer COMPANY_FREE_CAR_INSURANCE_ID;
     private Date INSURANCE_DATE;
     private Double DISTANCE_TRAVELLED_TILL;
     private Double DISTANCE_TRAVELLED_PER_YEAR;
@@ -22,12 +22,14 @@ public class CompanyFreeCarInsurance {
     private int VERSION;
     private Date CREATED_DATETIME;
     private Date MODIFIED_DATETIME;
+    private Integer ziriusId;
+    private boolean isUpdated;
 
-    public Long getCOMPANY_FREE_CAR_INSURANCE_ID() {
+    public Integer getCOMPANY_FREE_CAR_INSURANCE_ID() {
         return COMPANY_FREE_CAR_INSURANCE_ID;
     }
 
-    public void setCOMPANY_FREE_CAR_INSURANCE_ID(Long COMPANY_FREE_CAR_INSURANCE_ID) {
+    public void setCOMPANY_FREE_CAR_INSURANCE_ID(Integer COMPANY_FREE_CAR_INSURANCE_ID) {
         this.COMPANY_FREE_CAR_INSURANCE_ID = COMPANY_FREE_CAR_INSURANCE_ID;
     }
 
@@ -101,6 +103,22 @@ public class CompanyFreeCarInsurance {
 
     public void setMODIFIED_DATETIME(Date MODIFIED_DATETIME) {
         this.MODIFIED_DATETIME = MODIFIED_DATETIME;
+    }
+
+    public Integer getZiriusId() {
+        return ziriusId;
+    }
+
+    public void setZiriusId(Integer ziriusId) {
+        this.ziriusId = ziriusId;
+    }
+
+    public boolean getIsUpdated() {
+        return isUpdated;
+    }
+
+    public void setIsUpdated(boolean updated) {
+        isUpdated = updated;
     }
 }
 

@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "salary_group")
+@Table(name = "salary_group", schema = "salary")
 @Data
 public class SalaryGroupObject {
 

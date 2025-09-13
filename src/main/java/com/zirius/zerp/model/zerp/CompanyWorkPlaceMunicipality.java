@@ -6,8 +6,8 @@ import jakarta.persistence.Table;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "work_place_municipality")
+// @Entity
+// @Table(name = "work_place_municipality")
 public class CompanyWorkPlaceMunicipality {
 
     @Id
