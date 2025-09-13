@@ -16,8 +16,7 @@
     </parent>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -41,20 +40,20 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Jackson Databind (for manual ObjectMapper usage) -->
+        <!-- Jackson Databind -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
-        <!-- Spring Boot DevTools (Optional for Hot Reload) -->
+        <!-- Spring Boot DevTools (optional for hot reload) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Lombok (Optional, if you want to avoid boilerplate like getters/setters) -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -64,36 +63,32 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version> <!-- or latest -->
+            <version>1.18.30</version>
             <scope>provided</scope>
         </dependency>
 
-
-<!--        <dependency>-->
-<!--            <groupId>mysql</groupId>-->
-<!--            <artifactId>mysql-connector-java</artifactId>-->
-<!--            <version>8.0.29</version> &lt;!&ndash; Use the latest stable version &ndash;&gt;-->
-<!--        </dependency>-->
-
+        <!-- PostgreSQL -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.7</version>
-<!--            <scope>provided</scope>-->
         </dependency>
 
+        <!-- Custom Object Store Client -->
         <dependency>
             <groupId>customjar.objectstoreclient</groupId>
             <artifactId>objectstoreclient</artifactId>
             <version>0.0.1</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--        <groupId>com.zirius</groupId>-->
-<!--        <artifactId>shared-models</artifactId>-->
-<!--        <version>0.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
-
+        <!-- Example: Shared Models (if you enable later) -->
+        <!--
+        <dependency>
+            <groupId>com.zirius</groupId>
+            <artifactId>shared-models</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        -->
 
     </dependencies>
 
@@ -105,7 +100,5 @@
             </plugin>
         </plugins>
     </build>
-
-
 
 </project>
