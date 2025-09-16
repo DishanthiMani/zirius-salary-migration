@@ -19,12 +19,12 @@ public class EmployeeSalaryAccounts {
     public static final String PROPERTYNAME_employee_id = "employee_id";
 
     @Id
+    private String employee_id;
     private int company_id=0;
     private int bank_account_id;
     private int version=0;
     private LocalDateTime created_datetime ;
     private LocalDateTime modified_datetime ;
-    private String employee_id;
 
 }
 

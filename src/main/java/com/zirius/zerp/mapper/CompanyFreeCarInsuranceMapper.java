@@ -4,13 +4,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zirius.zerp.model.salary.CompanyFreeCarDetailsObject;
 import com.zirius.zerp.model.salary.CompanyFreeCarInsuranceObject;
 import com.zirius.zerp.model.zerp.CompanyFreeCarInsurance;
+import com.zirius.zerp.repo.SalaryRepo;
 import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 import java.math.BigDecimal;
 
 public class CompanyFreeCarInsuranceMapper {
 
-    public static CompanyFreeCarInsuranceObject toEntity(CompanyFreeCarInsurance dto, CompanyFreeCarDetailsObject freeCar, Integer companyId, CompanyConfigRepository repo, ObjectNode jsonNode) {
+    public static CompanyFreeCarInsuranceObject toEntity(CompanyFreeCarInsurance dto, CompanyFreeCarDetailsObject freeCar, Integer companyId, SalaryRepo repo, ObjectNode jsonNode) {
         CompanyFreeCarInsuranceObject entity = new CompanyFreeCarInsuranceObject();
 
 

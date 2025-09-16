@@ -7,6 +7,7 @@ import com.zirius.zerp.model.salary.StandardSalaryCodeDetails;
 import com.zirius.zerp.model.zerp.SalaryReportingCode;
 import com.zirius.zerp.model.zerp.SalaryReportingCodeAmessage;
 import com.zirius.zerp.model.zerp.SalaryReportingCodeBasis;
+import com.zirius.zerp.repo.SalaryRepo;
 import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 import java.math.BigDecimal;
@@ -19,7 +20,7 @@ import java.util.Optional;
 public class SalaryReportingCodeMapper {
 
     public static SalaryReportingCodeDetails toEntity(SalaryReportingCode dto, Integer companyId, SalaryReportingCodeBasis
-            codeBasis, SalaryReportingCodeAmessage codeAMessage, CompanyConfigRepository repo, ObjectNode jsonNode, Map<String, StandardSalaryCodeDetails> standardCodeMap) {
+            codeBasis, SalaryReportingCodeAmessage codeAMessage, SalaryRepo repo, ObjectNode jsonNode, Map<String, StandardSalaryCodeDetails> standardCodeMap) {
         SalaryReportingCodeDetails entity = new SalaryReportingCodeDetails();
         StandardSalaryCodeDetails standardCodeDetals = standardCodeMap.get(dto.getSalaryReportingCode());
         entity.setSalaryReportingCodeId(standardCodeDetals != null ? standardCodeDetals.getSalaryReportingCodeId() : null);

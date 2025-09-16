@@ -5,11 +5,12 @@ import com.zirius.zerp.model.salary.CompanyFreeCarDetailsObject;
 import com.zirius.zerp.model.salary.CompanyFreeCarSettingsObject;
 import com.zirius.zerp.model.zerp.CompanyFreeCarDetails;
 import com.zirius.zerp.model.zerp.CompanyFreeCarSetting;
+import com.zirius.zerp.repo.SalaryRepo;
 import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 public class CompanyFreeCarSettingsMapper {
 
-    public static CompanyFreeCarSettingsObject toEntity(CompanyFreeCarSetting dto, CompanyFreeCarDetailsObject freeCar, Integer companyId, CompanyConfigRepository repo, ObjectNode jsonNode) {
+    public static CompanyFreeCarSettingsObject toEntity(CompanyFreeCarSetting dto, CompanyFreeCarDetailsObject freeCar, Integer companyId, SalaryRepo repo, ObjectNode jsonNode) {
 
         CompanyFreeCarSettingsObject entity = new CompanyFreeCarSettingsObject();
 

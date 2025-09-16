@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zirius.zerp.model.zerp.CompanySalaryDetails;
 import com.zirius.zerp.model.zerp.SalaryYearlyConstant;
 import com.zirius.zerp.model.salary.SalaryYearlyConstantsConfigObject;
+import com.zirius.zerp.repo.SalaryRepo;
 import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 import java.math.BigDecimal;
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
 public class SalaryYearlyConstantsMapper {
 
     public static SalaryYearlyConstantsConfigObject toEntity(SalaryYearlyConstant dto, CompanySalaryDetails salaryDetails, Integer companyId,
-                                                             CompanyConfigRepository repo, ObjectNode jsonNode) {
+                                                             SalaryRepo repo, ObjectNode jsonNode) {
 
 
         SalaryYearlyConstantsConfigObject entity = new SalaryYearlyConstantsConfigObject();

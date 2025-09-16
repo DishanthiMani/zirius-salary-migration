@@ -8,6 +8,7 @@ import com.zirius.zerp.model.salary.WorkPlaceMunicipalityObject;
 import com.zirius.zerp.model.salary.WorkPlaceObject;
 import com.zirius.zerp.model.zerp.CompanyWorkPlace;
 import com.zirius.zerp.model.zerp.CompanyWorkPlaceMunicipality;
+import com.zirius.zerp.repo.SalaryRepo;
 import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class CompanyWorkPlaceMapper {
 
     public static WorkPlaceObject toEntity(CompanyWorkPlace dto, Integer companyId,
-                                           CompanyConfigRepository repo, ObjectNode jsonNode) {
+                                           SalaryRepo repo, ObjectNode jsonNode) {
         WorkPlaceObject entity = new WorkPlaceObject();
 
         entity.setWorkPlaceId(null);

@@ -18,7 +18,7 @@ public class CompanyDataMigrationController {
 
 
     @GetMapping("/companyData")
-    public ResponseEntity<Boolean> updateCompanyDataFromZerpToPlus(@RequestParam("ziriusPlussCompanyId") Integer companyId, @RequestParam("filePath") String path) {
+    public ResponseEntity<Boolean> updateCompanyDataFromZerpToPlus(@RequestParam("ziriusPlussCompanyId") String companyId, @RequestParam("filePath") String path) {
         System.out.println("Received request for companyId: " + companyId);
         try {
             boolean response = ziriusMigrationService.updateCompanyData(companyId, path);

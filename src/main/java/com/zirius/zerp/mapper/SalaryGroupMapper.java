@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zirius.zerp.Util;
 import com.zirius.zerp.model.salary.SalaryGroupObject;
 import com.zirius.zerp.model.zerp.SalaryGroup;
-import com.zirius.zerp.repository.salary.CompanyConfigRepository;
+import com.zirius.zerp.repo.SalaryRepo;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
@@ -15,7 +15,7 @@ public class SalaryGroupMapper {
 
     private static Util util;
 
-    public static SalaryGroupObject toEntity(SalaryGroup dto, Integer companyId, CompanyConfigRepository repo, ObjectNode jsonNode) {
+    public static SalaryGroupObject toEntity(SalaryGroup dto, Integer companyId, SalaryRepo repo, ObjectNode jsonNode) {
 
 
         SalaryGroupObject entity = new SalaryGroupObject();

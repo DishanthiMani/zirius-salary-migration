@@ -1,11 +1,9 @@
 package com.zirius.zerp.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.zirius.zerp.Util;
 import com.zirius.zerp.dto.CompanyDetailsDTO;
 import com.zirius.zerp.mapper.ClaimCollectorsDetailsMapper;
 import com.zirius.zerp.mapper.CompanyFreeCarBenefitsMapper;
@@ -47,15 +45,12 @@ import com.zirius.zerp.model.zerp.SalaryReportingCode;
 import com.zirius.zerp.model.zerp.SalaryReportingCodeAmessage;
 import com.zirius.zerp.model.zerp.SalaryReportingCodeBasis;
 import com.zirius.zerp.model.zerp.SalaryYearlyConstant;
-import com.zirius.zerp.repository.erp.ErpGeneralRepository;
-import com.zirius.zerp.repository.salary.CompanyConfigRepository;
+import com.zirius.zerp.repo.SalaryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -65,11 +60,7 @@ import java.util.stream.Collectors;
 public class CompanyConfigService {
 
     @Autowired
-    private ErpGeneralRepository erpRepo;
-
-    @Autowired
-    private CompanyConfigRepository companyConfigRepository;
-
+    private SalaryRepo configRepo;
 
 
     public List<SalaryGroupObject> updateSalaryGroupObject(Integer companyId, Map<String, Object> companyDataMap) throws IOException {
@@ -95,7 +86,7 @@ public class CompanyConfigService {
 
                         // toEntity modifies objectNode by adding fields
                         SalaryGroup dto = mapper.treeToValue(objectNode, SalaryGroup.class);
-                        SalaryGroupObject entity = SalaryGroupMapper.toEntity(dto, companyId, companyConfigRepository, objectNode);
+                        SalaryGroupObject entity = SalaryGroupMapper.toEntity(dto, companyId, configRepo, objectNode);
 
                         entities.add(entity);
                     }
@@ -125,7 +116,7 @@ public class CompanyConfigService {
             JsonNode salaryCodeAmessage = root.get("salaryReportingCodeAmessages");
             JsonNode salaryCodeBasis = root.get("salaryReportingCodeBases");
 
-            List<StandardSalaryCodeDetails> standardSalaryCodeDetails = companyConfigRepository.getStandardSalaryReportingCodeDetails();
+            List<StandardSalaryCodeDetails> standardSalaryCodeDetails = configRepo.getStandardSalaryReportingCodeDetails();
             Map<String, StandardSalaryCodeDetails> standardCodeMap = standardSalaryCodeDetails.stream()
                     .collect(Collectors.toMap(
                             StandardSalaryCodeDetails::getSalaryReportingCode,
@@ -184,7 +175,7 @@ public class CompanyConfigService {
                                 ));
 
 
-                        SalaryReportingCodeDetails entity = SalaryReportingCodeMapper.toEntity(dto, companyId, codeBasis, codeMessage, companyConfigRepository, objectNode, standardCodeMap);
+                        SalaryReportingCodeDetails entity = SalaryReportingCodeMapper.toEntity(dto, companyId, codeBasis, codeMessage, configRepo, objectNode, standardCodeMap);
                         entities.add(entity);
                     }
                 }
@@ -234,7 +225,7 @@ public class CompanyConfigService {
 
 
                         WorkPlaceObject result = CompanyWorkPlaceMapper.toEntity(dto, companyId,
-                                companyConfigRepository, objectNode);
+                                configRepo, objectNode);
                         workPlaceObjects.add(result);
                     }
 
@@ -266,7 +257,7 @@ public class CompanyConfigService {
             JsonNode workPlace = root.get("companyWorkPlaces");
             JsonNode municipality = root.get("workPlaceMunicipalities");
 
-            List<WorkPlaceObject> workPlaceObjects = companyConfigRepository.getWorkPlaceList(companyId);
+            List<WorkPlaceObject> workPlaceObjects = configRepo.getWorkPlaceList(companyId);
 
             List<CompanyWorkPlace> workPlaceObjectList = new ArrayList<>();
 
@@ -304,7 +295,7 @@ public class CompanyConfigService {
                         WorkPlaceObject wp = workPlaceObjects.stream().filter(f -> f.getWorkPlaceId().equals(companyWorkPlace.getZiriusId()))
                                 .findFirst().orElse(null);
 
-                        WorkPlaceMunicipalityObject workPlaceMunicipalityObject = CompanyWorkPlaceMunicipalityMapper.toEntity(dto, wp, companyId, companyConfigRepository, objectNode);
+                        WorkPlaceMunicipalityObject workPlaceMunicipalityObject = CompanyWorkPlaceMunicipalityMapper.toEntity(dto, wp, companyId, configRepo, objectNode);
                         workPlaceMunicipality.add(workPlaceMunicipalityObject);
                     }
                 }
@@ -339,7 +330,7 @@ public class CompanyConfigService {
                     if (ziriusIdNode == null && isUpdatedNode == null) {
 
                         CompanySalaryDetails dto = mapper.treeToValue(groupsNode, CompanySalaryDetails.class);
-                        entity = CompanySalaryDetailsMapper.toEntity(dto, companyId, companyConfigRepository, objectNode);
+                        entity = CompanySalaryDetailsMapper.toEntity(dto, companyId, configRepo, objectNode);
                     }
                 }
             }
@@ -383,7 +374,7 @@ public class CompanyConfigService {
 
                         CompanyFreeCarDetails dto = mapper.treeToValue(node, CompanyFreeCarDetails.class);
 
-                        CompanyFreeCarDetailsObject detailsObject = CompanyFreeCarDetailsMapper.toEntity(dto, companyId, companyConfigRepository, objectNode);
+                        CompanyFreeCarDetailsObject detailsObject = CompanyFreeCarDetailsMapper.toEntity(dto, companyId, configRepo, objectNode);
                         entities.add(detailsObject);
                     }
                 }
@@ -412,7 +403,7 @@ public class CompanyConfigService {
             JsonNode freeCarDetailsNode = root.get("companyFreeCarDetails");
 
             List<CompanyFreeCarDetails> carDetails = new ArrayList<>();
-            List<CompanyFreeCarDetailsObject> ziriusCarDetails = companyConfigRepository.getCompanyFreeCarDetails(companyId);
+            List<CompanyFreeCarDetailsObject> ziriusCarDetails = configRepo.getCompanyFreeCarDetails(companyId);
 
             if (freeCarDetailsNode != null && freeCarDetailsNode.isArray()) {
                 for (JsonNode node : freeCarDetailsNode) {
@@ -439,7 +430,7 @@ public class CompanyConfigService {
                         CompanyFreeCarInsurance dto = mapper.treeToValue(node, CompanyFreeCarInsurance.class);
                         CompanyFreeCarDetails freeCar = carDetails.stream().filter(f -> f.getCOMPANY_FREE_CAR_INSURANCE_ID() == dto.getCOMPANY_FREE_CAR_INSURANCE_ID()).findFirst().get();
                         CompanyFreeCarDetailsObject freeCarObject = ziriusCarDetails.stream().filter(f -> f.getCompanyFreeCarDetailsId().equals(freeCar.getZiriusId())).findFirst().get();
-                        CompanyFreeCarInsuranceObject insuranceObject = CompanyFreeCarInsuranceMapper.toEntity(dto, freeCarObject, companyId, companyConfigRepository, objectNode);
+                        CompanyFreeCarInsuranceObject insuranceObject = CompanyFreeCarInsuranceMapper.toEntity(dto, freeCarObject, companyId, configRepo, objectNode);
 
                         entities.add(insuranceObject);
                     }
@@ -468,7 +459,7 @@ public class CompanyConfigService {
             JsonNode freeCarDetailsNode = root.get("companyFreeCarDetails");
 
             List<CompanyFreeCarDetails> carDetails = new ArrayList<>();
-            List<CompanyFreeCarDetailsObject> ziriusCarDetails = companyConfigRepository.getCompanyFreeCarDetails(companyId);
+            List<CompanyFreeCarDetailsObject> ziriusCarDetails = configRepo.getCompanyFreeCarDetails(companyId);
 
             if (freeCarDetailsNode != null && freeCarDetailsNode.isArray()) {
                 for (JsonNode node : freeCarDetailsNode) {
@@ -494,7 +485,7 @@ public class CompanyConfigService {
                         CompanyFreeCarSetting settings = mapper.treeToValue(node, CompanyFreeCarSetting.class);
                         CompanyFreeCarDetails freeCar = carDetails.stream().filter(f -> f.getCOMPANY_FREE_CAR_SETTINGS_ID() == settings.getCOMPANY_FREE_CAR_SETTINGS_ID()).findFirst().get();
                         CompanyFreeCarDetailsObject freeCarObject = ziriusCarDetails.stream().filter(f -> f.getCompanyFreeCarDetailsId().equals(freeCar.getZiriusId())).findFirst().get();
-                        CompanyFreeCarSettingsObject freeCarSettingsObject = CompanyFreeCarSettingsMapper.toEntity(settings, freeCarObject, companyId, companyConfigRepository, objectNode);
+                        CompanyFreeCarSettingsObject freeCarSettingsObject = CompanyFreeCarSettingsMapper.toEntity(settings, freeCarObject, companyId, configRepo, objectNode);
                         entities.add(freeCarSettingsObject);
                     }
                 }
@@ -522,7 +513,7 @@ public class CompanyConfigService {
             JsonNode freeCarDetailsNode = root.get("companyFreeCarDetails");
 
             List<CompanyFreeCarDetails> carDetails = new ArrayList<>();
-            List<CompanyFreeCarDetailsObject> ziriusCarDetails = companyConfigRepository.getCompanyFreeCarDetails(companyId);
+            List<CompanyFreeCarDetailsObject> ziriusCarDetails = configRepo.getCompanyFreeCarDetails(companyId);
 
             if (freeCarDetailsNode != null && freeCarDetailsNode.isArray()) {
                 for (JsonNode node : freeCarDetailsNode) {
@@ -549,7 +540,7 @@ public class CompanyConfigService {
                         CompanyFreeCarBenefits dto = mapper.treeToValue(node, CompanyFreeCarBenefits.class);
                         CompanyFreeCarDetails freeCar = carDetails.stream().filter(f -> f.getCOMPANY_FREE_CAR_BENEFITS_ID() == dto.getCompanyFreeCarBenefitId()).findFirst().get();
                         CompanyFreeCarDetailsObject freeCarObject = ziriusCarDetails.stream().filter(f -> f.getCompanyFreeCarDetailsId().equals(freeCar.getZiriusId())).findFirst().get();
-                        CompanyFreeCarBenefitsObject benefitsObject = CompanyFreeCarBenefitsMapper.toEntity(dto, freeCarObject, companyId, companyConfigRepository, objectNode);
+                        CompanyFreeCarBenefitsObject benefitsObject = CompanyFreeCarBenefitsMapper.toEntity(dto, freeCarObject, companyId, configRepo, objectNode);
                         entities.add(benefitsObject);
                     }
                 }
@@ -598,7 +589,7 @@ public class CompanyConfigService {
                         }
 
                         SalaryYearlyConstant dto = mapper.treeToValue(node, SalaryYearlyConstant.class);
-                        SalaryYearlyConstantsConfigObject configObject = SalaryYearlyConstantsMapper.toEntity(dto, salaryDetails, companyId, companyConfigRepository, objectNode);
+                        SalaryYearlyConstantsConfigObject configObject = SalaryYearlyConstantsMapper.toEntity(dto, salaryDetails, companyId, configRepo, objectNode);
                         entities.add(configObject);
                     }
                 }
@@ -652,7 +643,7 @@ public class CompanyConfigService {
                         ClaimCollectorValues claimValue = claimValuesList.stream().filter(f ->
                                 f.getCLAIM_COLLECTORS_VALUES_ID().equals(dto.getCLAIM_COLLECTORS_VALUES_ID())).findFirst().get();
 
-                        ClaimCollectorsDetailsObject detailsObject = ClaimCollectorsDetailsMapper.toEntity(dto, companyId, claimValue, companyConfigRepository, objectNode);
+                        ClaimCollectorsDetailsObject detailsObject = ClaimCollectorsDetailsMapper.toEntity(dto, companyId, claimValue, configRepo, objectNode);
                         entities.add(detailsObject);
                     }
                 }
@@ -692,7 +683,7 @@ public class CompanyConfigService {
                         }
 
                         CompanyPensionOTP dto = mapper.treeToValue(node, CompanyPensionOTP.class);
-                        CompanyPensionOtpObject otpObject = CompanyPensionOtpMapper.toEntity(dto, companyId, companyConfigRepository, objectNode);
+                        CompanyPensionOtpObject otpObject = CompanyPensionOtpMapper.toEntity(dto, companyId, configRepo, objectNode);
                         resultList.add(otpObject);
                     }
                 }

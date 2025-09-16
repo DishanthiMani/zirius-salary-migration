@@ -6,11 +6,11 @@ import com.zirius.zerp.model.zerp.CompanyFreeCarBenefits;
 import com.zirius.zerp.model.zerp.CompanyFreeCarDetails;
 import com.zirius.zerp.model.zerp.CompanyFreeCarInsurance;
 import com.zirius.zerp.model.zerp.CompanyFreeCarSetting;
-import com.zirius.zerp.repository.salary.CompanyConfigRepository;
+import com.zirius.zerp.repo.SalaryRepo;
 
 public class CompanyFreeCarDetailsMapper {
 
-    public static CompanyFreeCarDetailsObject toEntity(CompanyFreeCarDetails dto, Integer companyId, CompanyConfigRepository repo, ObjectNode jsonNode) {
+    public static CompanyFreeCarDetailsObject toEntity(CompanyFreeCarDetails dto, Integer companyId, SalaryRepo repo, ObjectNode jsonNode) throws Exception {
 
         CompanyFreeCarDetailsObject entity = new CompanyFreeCarDetailsObject();
 
@@ -38,7 +38,7 @@ public class CompanyFreeCarDetailsMapper {
         entity.setInactive(false);
         entity.setToBeDeleted(false);
 
-        repo.save(entity);
+        repo.saveOrUpdate(entity);
 
         if (entity.getCompanyFreeCarDetailsId() != null) {
             jsonNode.put("ziriusId", entity.getCompanyFreeCarDetailsId());

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zirius.zerp.model.salary.ClaimCollectorsDetailsObject;
 import com.zirius.zerp.model.zerp.ClaimCollectorDetails;
 import com.zirius.zerp.model.zerp.ClaimCollectorValues;
+import com.zirius.zerp.repo.SalaryRepo;
 import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 import java.math.BigDecimal;
@@ -11,7 +12,7 @@ import java.math.BigDecimal;
 public class ClaimCollectorsDetailsMapper {
 
     public static ClaimCollectorsDetailsObject toEntity(ClaimCollectorDetails dto, Integer companyId, ClaimCollectorValues claimValues,
-                                                        CompanyConfigRepository repo, ObjectNode jsonNode) {
+                                                        SalaryRepo repo, ObjectNode jsonNode) {
         ClaimCollectorsDetailsObject entity = new ClaimCollectorsDetailsObject();
 
         entity.setClaimCollectorsId(null);

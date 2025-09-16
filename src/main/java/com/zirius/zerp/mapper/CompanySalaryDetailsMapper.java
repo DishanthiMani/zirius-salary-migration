@@ -3,11 +3,12 @@ package com.zirius.zerp.mapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zirius.zerp.model.salary.CompanySalaryDetailsObject;
 import com.zirius.zerp.model.zerp.CompanySalaryDetails;
+import com.zirius.zerp.repo.SalaryRepo;
 import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 public class CompanySalaryDetailsMapper {
 
-    public static CompanySalaryDetailsObject toEntity(CompanySalaryDetails dto, Integer companyId, CompanyConfigRepository repo, ObjectNode jsonNode) {
+    public static CompanySalaryDetailsObject toEntity(CompanySalaryDetails dto, Integer companyId, SalaryRepo repo, ObjectNode jsonNode) {
         CompanySalaryDetailsObject entity = new CompanySalaryDetailsObject();
 
         if (dto.getCOMPANY_ID() != null) {

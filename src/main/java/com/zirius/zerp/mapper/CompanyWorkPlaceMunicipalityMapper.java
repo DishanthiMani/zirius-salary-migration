@@ -4,12 +4,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zirius.zerp.model.salary.WorkPlaceMunicipalityObject;
 import com.zirius.zerp.model.salary.WorkPlaceObject;
 import com.zirius.zerp.model.zerp.CompanyWorkPlaceMunicipality;
+import com.zirius.zerp.repo.SalaryRepo;
 import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 public class CompanyWorkPlaceMunicipalityMapper {
 
     public static WorkPlaceMunicipalityObject toEntity(CompanyWorkPlaceMunicipality dto, WorkPlaceObject workPlaceObject, Integer companyId,
-                                                       CompanyConfigRepository repo, ObjectNode jsonNode) {
+                                                       SalaryRepo repo, ObjectNode jsonNode) {
         WorkPlaceMunicipalityObject entity = new WorkPlaceMunicipalityObject();
 
 

@@ -3,11 +3,12 @@ package com.zirius.zerp.mapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zirius.zerp.model.salary.CompanyPensionOtpObject;
 import com.zirius.zerp.model.zerp.CompanyPensionOTP;
+import com.zirius.zerp.repo.SalaryRepo;
 import com.zirius.zerp.repository.salary.CompanyConfigRepository;
 
 public class CompanyPensionOtpMapper {
 
-    public static CompanyPensionOtpObject toEntity(CompanyPensionOTP dto, Integer companyId, CompanyConfigRepository repo, ObjectNode jsonNode) {
+    public static CompanyPensionOtpObject toEntity(CompanyPensionOTP dto, Integer companyId, SalaryRepo repo, ObjectNode jsonNode) {
         CompanyPensionOtpObject entity = new CompanyPensionOtpObject();
 
 

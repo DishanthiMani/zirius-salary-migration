@@ -81,3 +81,4 @@ public class AltinnUserObject {
     @Column(name = "EMPLOYEE_ID", nullable = false)
     private String employeeId;
 }
+

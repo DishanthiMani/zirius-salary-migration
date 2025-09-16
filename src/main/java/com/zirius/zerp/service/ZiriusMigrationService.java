@@ -2,7 +2,10 @@ package com.zirius.zerp.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zirius.zerp.dto.CompanyDetailsDTO;
+import com.zirius.zerp.dto.EmployeeDetailsDTO;
 import com.zirius.zerp.model.erp.FirmaObject;
+import com.zirius.zerp.model.erp.app_userObject;
+import com.zirius.zerp.model.erp.company_userObject;
 import com.zirius.zerp.model.salary.ClaimCollectorsDetailsObject;
 import com.zirius.zerp.model.salary.CompanyFreeCarBenefitsObject;
 import com.zirius.zerp.model.salary.CompanyFreeCarDetailsObject;
@@ -15,17 +18,17 @@ import com.zirius.zerp.model.salary.SalaryReportingCodeDetails;
 import com.zirius.zerp.model.salary.SalaryYearlyConstantsConfigObject;
 import com.zirius.zerp.model.salary.WorkPlaceMunicipalityObject;
 import com.zirius.zerp.model.salary.WorkPlaceObject;
-import com.zirius.zerp.model.zerp.CompanySalaryDetails;
-import com.zirius.zerp.repository.erp.ErpGeneralRepository;
+import com.zirius.zerp.repo.SalaryRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,21 +38,25 @@ public class ZiriusMigrationService {
 
 
     @Autowired
-    private ErpGeneralRepository configRepo;
+    private SalaryRepo configRepo;
 
     @Autowired
     private CompanyConfigService configService;
 
+    @Autowired
+    private EmployeeConfigService empConfService;
 
-    public boolean updateCompanyData(Integer companyId, String path) throws Exception{
+
+    public boolean updateCompanyData(String companyId, String path) throws Exception {
         Map<String, Object> companyDataMap = null;
 
         try {
 
+            configRepo = new SalaryRepo(companyId);
             companyDataMap = getJSONFileDataForCompany(companyId, path);
-            FirmaObject companyObject = configRepo.getFirmaObjectData(companyId);
-            updateCompanyConfiguration(companyObject, companyDataMap);
-            updateEmployeeConfiguration(companyObject, companyDataMap);
+            FirmaObject companyObject = configRepo.getFirmaObjectData();
+            CompanyDetailsDTO companyDetailsDTO = updateCompanyConfiguration(companyObject, companyDataMap);
+            List<EmployeeDetailsDTO> empDetails = updateEmployeeConfiguration(companyObject, companyDataMap, companyDetailsDTO);
 
             if (companyDataMap != null) {
                 ObjectMapper objectMapper = new ObjectMapper();
@@ -72,8 +79,8 @@ public class ZiriusMigrationService {
                 ObjectMapper objectMapper = new ObjectMapper();
                 String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(companyDataMap);
 
-                String fallbackOrgNo = (String) companyDataMap.get("organizationNumber");
-                String fileName = "E:\\Migration_docs\\" + fallbackOrgNo + ".json";
+//                String fallbackOrgNo = (String) companyDataMap.get("organizationNumber");
+                String fileName = "E:\\Migration_docs\\" + companyId + ".json";
 
                 Files.write(
                         Paths.get(fileName),
@@ -88,7 +95,8 @@ public class ZiriusMigrationService {
     }
 
 
-    public void updateCompanyConfiguration(FirmaObject companyObject, Map<String, Object> companyDataMap) {
+    @Transactional
+    public CompanyDetailsDTO updateCompanyConfiguration(FirmaObject companyObject, Map<String, Object> companyDataMap) {
 
         try {
 
@@ -122,20 +130,26 @@ public class ZiriusMigrationService {
             companyDetailsDTO.setCompanyPensionOtpObjects(companyPensionOtpObjects);
 
             System.out.println("****CompanyConfigObject****" + companyDetailsDTO);
+            return companyDetailsDTO;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to update salary config");
+            throw new RuntimeException("Failed to update company salary config" + e.getMessage());
         }
 
     }
 
-    public void updateEmployeeConfiguration(FirmaObject companyObject, Map<String, Object> companyDataMap) {
+    @Transactional
+    public List<EmployeeDetailsDTO> updateEmployeeConfiguration(FirmaObject companyObject, Map<String, Object> companyDataMap, CompanyDetailsDTO companyDetailsDTO) {
 
         try {
 
+//            List<app_userObject> appUserObjects = empConfService.updateAppUserList(companyObject, companyDataMap);
+//            List<company_userObject> companyUserObjects = empConfService.updateCompanyUserList(companyObject, companyDataMap, appUserObjects);
+            List<EmployeeDetailsDTO> employeeDetailsList = new ArrayList<>();
+//            empConfService.updateEmployeeDetails(companyObject, companyDataMap, appUserObjects, companyUserObjects);
 
 
-
+            return employeeDetailsList;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Failed to update EmployeeConfiguration");
@@ -143,7 +157,7 @@ public class ZiriusMigrationService {
     }
 
 
-    public Map<String, Object> getJSONFileDataForCompany(Integer companyId, String path) {
+    public Map<String, Object> getJSONFileDataForCompany(String companyId, String path) {
 
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> jsonMap = new HashMap<>();
